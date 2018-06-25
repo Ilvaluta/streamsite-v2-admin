@@ -54,7 +54,7 @@ export default {
         twitter: this.streamer.twitter,
         vids_number: this.streamer.num
       }
-      this.$http.post('http://streamsiteb/api/streamer/update/12', newStreamer)
+      this.$http.post('http://streamsiteb/api/streamer/update/1', newStreamer)
         .then((response) => {
           alert('Streamer Added');
         });

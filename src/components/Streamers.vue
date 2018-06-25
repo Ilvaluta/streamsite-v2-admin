@@ -3,7 +3,7 @@
     <b-container>
       <div class="streamer-list">
         <h1>Manage Streamers</h1>
-        <b-table striped :items="streamers"></b-table>
+        <b-table striped :items="streamerList"></b-table>
       </div>
       <!-- Add -->
       <div id="streamer-add">
@@ -45,7 +45,7 @@ export default {
   name: 'Streamers',
   data () {
     return {
-      streamers: [],
+      streamerList: [],
       streamer: {},
       options: [
         { value: '1', text: '1' },
@@ -63,7 +63,7 @@ export default {
     fetchStreamers(){
       this.$http.get('http://streamsiteb/api/streamers')
         .then(function(response){
-          this.streamers = response.body
+          this.streamerList = response.body
         });
     },
     addStreamer(e){
@@ -72,14 +72,17 @@ export default {
         twitter: this.streamer.twitter,
         vids_number: this.streamer.num
       }
-      this.$http.post('http://streamsiteb/api/streamer/update/12', newStreamer)
+      this.$http.post('http://streamsiteb/api/streamer/add', newStreamer)
         .then((response) => {
           alert('Streamer Added');
         });
         e.preventDefault();
-    },
+      },
   },
   created: function(){
+    this.fetchStreamers();
+  },
+  updated: function(){
     this.fetchStreamers();
   }
 }
