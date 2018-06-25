@@ -4,7 +4,7 @@ import Settings from '@/components/Settings'
 import Giveaway from '@/components/Giveaway'
 import Streamers from '@/components/Streamers'
 import Edit from '@/components/Edit'
-import Streamerlist from '@/components/Streamerlist'
+import Add from '@/components/Add'
 import Resource from 'vue-resource'
 
 
@@ -36,9 +36,9 @@ export default new Router({
       component: Settings
     },
     {
-      path: '/streamerlist',
-      name: 'Streamerlist',
-      component: Streamerlist
+      path: '/add',
+      name: 'Add',
+      component: Add
     }
   ]
 })
