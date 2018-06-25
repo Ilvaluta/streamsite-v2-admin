@@ -41,7 +41,7 @@ export default {
         twitter: {
           label: 'Twitter'
         },
-        num: {
+        vids_number: {
           label: 'Vids num'
         },
         actions: {
