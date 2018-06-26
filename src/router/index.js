@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Settings from '@/components/Settings'
-import Giveaway from '@/components/Giveaway'
-import Streamers from '@/components/Streamers'
-import Edit from '@/components/Edit'
-import Add from '@/components/Add'
+import Settings from '@/components/streamer/Settings'
+import Giveaway from '@/components/streamer/Giveaway'
+import Streamers from '@/components/admin/Streamers'
+import Edit from '@/components/admin/Edit'
+import Add from '@/components/admin/Add'
+import Login from '@/components/login/Login'
 import Resource from 'vue-resource'
-
 
 Vue.use(Router)
 Vue.use(Resource)
@@ -17,28 +17,36 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'login',
+      component: Login
+    },
+    {
+      path: '/admin',
       name: 'Streamers',
-      component: Streamers
+      component: Streamers,
+      meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
     },
     {
-      path: '/edit',
+      path: '/admin/edit',
       name: 'Edit',
-      component: Edit
+      component: Edit,
+      meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
     },
     {
-      path: '/giveaway',
+      path: '/admin/add',
+      name: 'Add',
+      component: Add,
+        meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
+    },
+    {
+      path: '/streamer/giveaway',
       name: 'Giveaway',
       component: Giveaway
     },
     {
-      path: '/settings',
+      path: '/streamer/settings',
       name: 'Settings',
       component: Settings
     },
-    {
-      path: '/add',
-      name: 'Add',
-      component: Add
-    }
   ]
 })
