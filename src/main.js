@@ -10,6 +10,8 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue);
 
+Vue.prototype.$id = '1';
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

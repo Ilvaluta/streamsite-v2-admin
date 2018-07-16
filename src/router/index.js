@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Settings from '@/components/streamer/Settings'
 import Giveaway from '@/components/streamer/Giveaway'
+import Sponsors from '@/components/streamer/Sponsors'
 import Streamers from '@/components/admin/Streamers'
 import Edit from '@/components/admin/Edit'
 import Add from '@/components/admin/Add'
@@ -39,14 +40,19 @@ export default new Router({
         meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
     },
     {
-      path: '/streamer/giveaway',
+      path: '/streamer/:id/giveaway',
       name: 'Giveaway',
       component: Giveaway
     },
     {
-      path: '/streamer/settings',
+      path: '/streamer/:id/settings',
       name: 'Settings',
       component: Settings
     },
+    {
+      path: '/streamer/:id/sponsors',
+      name: 'Sponsors',
+      component: Sponsors
+    }
   ]
 })

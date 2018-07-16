@@ -31,6 +31,7 @@
               <small class="text-muted">Last updated 3 mins ago</small>
             </div>
           </b-card>
+          <!-- ### -->
           <b-card header="<b>Video Settings</b>">
             <b-list-group>
               <b-list-group-item><b>Show Highlights :</b>
@@ -67,6 +68,7 @@ export default {
   data() {
     return {
       streamer: '',
+      sponsor: '',
       selected: [],
       options: [{
           value: '1',
