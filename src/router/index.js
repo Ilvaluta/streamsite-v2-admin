@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Settings from '@/components/streamer/Settings'
 import Giveaway from '@/components/streamer/Giveaway'
 import Sponsors from '@/components/streamer/Sponsors'
-import Streamers from '@/components/admin/Streamers'
+import Dashboard from '@/components/admin/Dashboard'
 import Edit from '@/components/admin/Edit'
 import Add from '@/components/admin/Add'
 import Login from '@/components/login/Login'
@@ -23,12 +23,12 @@ export default new Router({
     },
     {
       path: '/admin',
-      name: 'Streamers',
-      component: Streamers,
+      name: 'Dashboard',
+      component: Dashboard,
       meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
     },
     {
-      path: '/admin/edit',
+      path: '/admin/edit/:id',
       name: 'Edit',
       component: Edit,
       meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}

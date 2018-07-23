@@ -4,20 +4,17 @@
       <div class="streamer-list">
         <h1>Manage Streamers</h1>
         <b-table striped hover :items="streamers" :fields="fields">
-          <template slot="actions" slot-scope="row">
-            <b-button size="sm" @click.stop="row.toggleDetails">
-              {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
-            </b-button>
-          </template>
-          <template slot="row-details" slot-scope="row">
-            <b-card>
-              <ul>
-                <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value}}</li>
-              </ul>
-              <b-button size="sm" class="btn-danger" @click.stop="deleteStreamer(row.item.id)">
-                Delete
+          <template slot="edit" slot-scope="row">
+            <router-link v-bind:to="'edit/' + row.item.id">
+              <b-button size="sm" class="btn-warning">
+                Edit
               </b-button>
-            </b-card>
+            </router-link>
+          </template>
+          <template slot="delete" slot-scope="row">
+            <b-button size="sm" class="btn-danger" @click.stop="deleteStreamer(row.item.id)">
+              Delete
+            </b-button>
           </template>
         </b-table>
       </div>
@@ -27,7 +24,7 @@
 
 <script>
 export default {
-  name: 'Streamers',
+  name: 'Dashboard',
   data () {
     return {
       streamers: [],
@@ -44,9 +41,12 @@ export default {
         vids_number: {
           label: 'Vids num'
         },
-        actions: {
-          label: 'Actions'
+        edit: {
+          label: 'Edit'
         },
+        delete: {
+          label: 'Delete'
+        }
       }
     }
   },
@@ -65,6 +65,9 @@ export default {
       }
     },
   created: function(){
+    this.fetchStreamers();
+  },
+  updated: function(){
     this.fetchStreamers();
   },
 }

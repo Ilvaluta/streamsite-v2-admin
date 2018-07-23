@@ -11,8 +11,17 @@
               <b-list-group-item>
                 <b-row class="my-1">
                   <b-col sm="2">
+                    <label for="input-header"><b>Header</b></label></b-col>
+                  <b-col sm="6">
+                    <b-form-input id="input-header" size="sm" type="text" placeholder="Header" v-model="streamer.header"></b-form-input>
+                  </b-col>
+                </b-row>
+              </b-list-group-item>
+              <b-list-group-item>
+                <b-row class="my-1">
+                  <b-col sm="2">
                     <label for="input-twitch"><b>Twitch:</b></label></b-col>
-                  <b-col sm="4">
+                  <b-col sm="6">
                     <b-form-input id="input-twitch" size="sm" type="text" placeholder="Enter your username" v-model="streamer.twitch"></b-form-input>
                   </b-col>
                 </b-row>
@@ -20,9 +29,18 @@
               <b-list-group-item>
                 <b-row class="my-1">
                   <b-col sm="2">
-                    <label for="input-twitter"><b>Twitter:</b></label></b-col>
-                  <b-col sm="4">
-                    <b-form-input id="input-twitter" size="sm" type="text" placeholder="Enter your username" v-model="streamer.twitter"></b-form-input>
+                    <label for="input-donation"><b>Donation:</b></label></b-col>
+                  <b-col sm="6">
+                    <b-form-input id="input-donation" size="sm" type="text" placeholder="Donation URL" v-model="streamer.donation"></b-form-input>
+                  </b-col>
+                </b-row>
+              </b-list-group-item>
+              <b-list-group-item>
+                <b-row class="my-1">
+                  <b-col sm="2">
+                    <label for="input-giveaway"><b>Giveaway:</b></label></b-col>
+                  <b-col sm="6">
+                    <b-form-input id="input-giveaway" size="sm" type="text" placeholder="Giveaway URL" v-model="streamer.giveawayurl"></b-form-input>
                   </b-col>
                 </b-row>
               </b-list-group-item>
@@ -35,10 +53,16 @@
           <b-card header="<b>Video Settings</b>">
             <b-list-group>
               <b-list-group-item><b>Show Highlights :</b>
-                <b-form-checkbox-group v-model="selected" name="highlights"></b-form-checkbox-group>
+                <b-form-checkbox id="checkboxHighlights"
+                     v-model="streamer.highlights"
+                     value="true"
+                     unchecked-value="false"></b-form-checkbox>
               </b-list-group-item>
               <b-list-group-item><b>Show Broadcasts : </b>
-                <b-form-checkbox-group v-model="selected" name="broadcasts"></b-form-checkbox-group>
+                <b-form-checkbox id="checkboxVods"
+                     v-model="streamer.vods"
+                     value="true"
+                     unchecked-value="false"></b-form-checkbox>
               </b-list-group-item>
               <b-list-group-item><b>How many of each : </b>
                 <b-row class="my-1">
@@ -47,6 +71,12 @@
                     <b-form-select v-model="streamer.vids_number" :options="options" class="mb-3" />
                   </b-col>
                 </b-row>
+              </b-list-group-item>
+              <b-list-group-item><b>Show Sponsors : </b>
+                <b-form-checkbox id="checkboxSponsors"
+                     v-model="streamer.sponsors"
+                     value="true"
+                     unchecked-value="false"></b-form-checkbox>
               </b-list-group-item>
             </b-list-group>
             <div slot="footer">
@@ -67,9 +97,8 @@ export default {
   name: 'Settings',
   data() {
     return {
-      streamer: '',
+      streamer: {},
       sponsor: '',
-      selected: [],
       options: [{
           value: '1',
           text: '1'
@@ -114,21 +143,28 @@ export default {
     },
     editStreamer(e) {
       let updStreamer = {
-        id: this.streamer.id,
         twitch: this.streamer.twitch,
-        twitter: this.streamer.twitter,
-        vids_number: this.streamer.vids_number
+        vids_number: this.streamer.vids_number,
+        donation: this.streamer.donation,
+        giveawayurl: this.streamer.giveawayurl,
+        vods: this.streamer.vods,
+        highlights: this.streamer.highlights,
+        header: this.streamer.header,
+        sponsors: this.streamer.sponsors
       }
-      this.$http.put('http://streamsiteb/api/streamer/update', updStreamer)
+      this.$http.put('http://streamsiteb/api/streamer/' + this.$route.params.id + '/update', updStreamer)
         .then((response) => {
-          alert('Streamer Edited');
+          alert('Settings Updated');
         });
       e.preventDefault();
-    },
+    }
   },
   created: function() {
-    this.fetchStreamer(this.$route.query.id);
+    this.fetchStreamer(this.$route.params.id);
   },
+  update: function() {
+    this.fetchStreamer(this.$route.params.id);
+  }
 }
 </script>
 
