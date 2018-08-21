@@ -35,37 +35,10 @@ export default {
   data () {
     return {
       giveawayurl: '',
-      giveaway: {}
+      giveaway: ''
     }
-  },
-  methods: {
-    fetchGiveaway(id){
-        this.$http.get('http://streamsiteb/api/streamer/'+id)
-          .then(function(res) {
-            if (res.body.donation != null) {
-              this.giveawayurl = res.body.giveawayurl;
-            } else {
-              this.giveawayurl = false;
-            }
-          });
-    },
-    addGiveaway(e){
-      let newGiveaway = {
-        url: this.giveaway.url
-      }
-      this.$http.post('http://streamsiteb/api/streamer/' + this.$route.params.id + '/giveaway/add', newGiveaway)
-        .then((response) => {
-          alert('Giveaway Added');
-        });
-        e.preventDefault();
-    }
-  },
-  created: function(){
-    this.fetchGiveaway(this.$route.params.id);
-  },
-  updated: function(){
-    this.fetchGiveaway(this.$route.params.id);
   }
+
 }
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -16,5 +16,7 @@ export default {
 </script>
 
 <style>
-
+.twitch-purple{
+  background: #6441A4;
+}
 </style>

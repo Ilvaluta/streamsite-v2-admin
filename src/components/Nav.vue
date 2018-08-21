@@ -4,15 +4,14 @@
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <b-navbar-brand href="#">NavBar</b-navbar-brand>
+    <router-link to="/dashboard" tag="b-navbar-brand">StreamSite</router-link>
 
     <b-collapse is-nav id="nav_collapse">
-
       <b-navbar-nav>
-        <b-nav-item href="#">Link</b-nav-item>
-        <b-nav-item href="#" disabled>Disabled</b-nav-item>
-      </b-navbar-nav>
-
+        <b-nav-item to="/dashboard/settings">Settings</b-nav-item>
+        <b-nav-item to="/dashboard/sponsors">Sponsors</b-nav-item>
+        <b-nav-item to="/dashboard/giveaway">Giveaway</b-nav-item>
+    </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown right>

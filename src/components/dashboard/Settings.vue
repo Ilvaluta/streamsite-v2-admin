@@ -2,7 +2,7 @@
 <div class="settings">
   <b-container>
     <div class="streamer-settings">
-      <b-form @submit="editStreamer">
+      <b-form @submit.prevent="editStreamer">
         <h1>Manage your settings</h1>
         <hr>
         <b-card-group deck>
@@ -68,7 +68,7 @@
                 <b-row class="my-1">
                   <b-col sm="5"><label for="input-num">Number of videos to show :</label></b-col>
                   <b-col sm="3">
-                    <b-form-select v-model="streamer.vids_number" :options="options" class="mb-3" />
+                    <b-form-select v-model="streamer.vids_num" :options="options" class="mb-3" />
                   </b-col>
                 </b-row>
               </b-list-group-item>
@@ -93,12 +93,13 @@
 </template>
 
 <script>
+import db from '../firebaseInit'
+
 export default {
   name: 'Settings',
   data() {
     return {
       streamer: {},
-      sponsor: '',
       options: [{
           value: '1',
           text: '1'
@@ -135,35 +136,35 @@ export default {
     }
   },
   methods: {
-    fetchStreamer(id) {
-      this.$http.get('http://streamsiteb/api/streamer/' + id)
-        .then(function(response) {
-          this.streamer = response.body;
-        });
+    fetchData() {
+      db.collection('streamers').where('streamer_id', '==', this.$id).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          this.streamer = doc.data()
+        })
+      })
     },
-    editStreamer(e) {
-      let updStreamer = {
-        twitch: this.streamer.twitch,
-        vids_number: this.streamer.vids_number,
-        donation: this.streamer.donation,
-        giveawayurl: this.streamer.giveawayurl,
-        vods: this.streamer.vods,
-        highlights: this.streamer.highlights,
-        header: this.streamer.header,
-        sponsors: this.streamer.sponsors
-      }
-      this.$http.put('http://streamsiteb/api/streamer/' + this.$route.params.id + '/update', updStreamer)
-        .then((response) => {
-          alert('Settings Updated');
-        });
-      e.preventDefault();
+    editStreamer(){
+      db.collection('streamers').where('streamer_id', '==', this.$id).get().then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          doc.ref.update({
+            streamer_id: this.streamer.streamer_id,
+            header: this.streamer.header,
+            twitch: this.streamer.twitch,
+            vods: this.streamer.vods,
+            vids_num: this.streamer.vids_num,
+            highlights: this.streamer.highlights,
+            sponsors: this.streamer.sponsors,
+            donation: this.streamer.donation,
+            giveawayurl: this.streamer.giveawayurl
+          }).then(() => {
+            this.$router.push('/dashboard/settings')
+          })
+        })
+      })
     }
   },
-  created: function() {
-    this.fetchStreamer(this.$route.params.id);
-  },
-  update: function() {
-    this.fetchStreamer(this.$route.params.id);
+  created: function(){
+    this.fetchData()
   }
 }
 </script>

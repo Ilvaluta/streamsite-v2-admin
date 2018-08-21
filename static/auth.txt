@@ -1,8 +1,0 @@
-{
-    domain: 'streamsites.auth0.com',
-    clientID: 'nafpCDBIl0veiy0CpTfrM6DXolXpmAxv',
-    redirectUri: 'http://localhost:3000/callback',
-    audience: 'https://streamsites.auth0.com/userinfo',
-    responseType: 'token id_token',
-    scope: 'openid'
-  }

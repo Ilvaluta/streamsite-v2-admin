@@ -1,16 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Settings from '@/components/streamer/Settings'
-import Giveaway from '@/components/streamer/Giveaway'
-import Sponsors from '@/components/streamer/Sponsors'
-import Dashboard from '@/components/admin/Dashboard'
-import Edit from '@/components/admin/Edit'
-import Add from '@/components/admin/Add'
+import Settings from '@/components/dashboard/Settings'
+import Giveaway from '@/components/dashboard/Giveaway'
+import Sponsors from '@/components/dashboard/Sponsors'
+import Dashboard from '@/components/dashboard/Dashboard'
+import Test from '@/components/dashboard/Test'
 import Login from '@/components/login/Login'
-import Resource from 'vue-resource'
+
 
 Vue.use(Router)
-Vue.use(Resource)
 
 export default new Router({
   mode: 'history',
@@ -18,40 +16,27 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
       component: Login
     },
     {
-      path: '/admin',
-      name: 'Dashboard',
-      component: Dashboard,
-      meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
+      path: '/dashboard/test/',
+      name: 'Test',
+      component: Test
     },
     {
-      path: '/admin/edit/:id',
-      name: 'Edit',
-      component: Edit,
-      meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
+      path: '/dashboard/',
+      component: Dashboard
     },
     {
-      path: '/admin/add',
-      name: 'Add',
-      component: Add,
-        meta: {requiresAuth: true, adminAuth: true, streamerAuth: false}
-    },
-    {
-      path: '/streamer/:id/giveaway',
-      name: 'Giveaway',
+      path: '/dashboard/giveaway',
       component: Giveaway
     },
     {
-      path: '/streamer/:id/settings',
-      name: 'Settings',
+      path: '/dashboard/settings',
       component: Settings
     },
     {
-      path: '/streamer/:id/sponsors',
-      name: 'Sponsors',
+      path: '/dashboard/sponsors',
       component: Sponsors
     }
   ]

@@ -6,8 +6,12 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex)
+import VueAxios from 'vue-axios'
+import axios from 'axios'
 
+Vue.use(VueAxios, axios)
+
+Vue.use(Vuex)
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -15,6 +19,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.use(BootstrapVue);
 
 Vue.prototype.$id = '1';
+
 
 /* eslint-disable no-new */
 new Vue({
