@@ -5,11 +5,8 @@ import App from './App'
 import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 import Vuex from 'vuex'
-
-import VueAxios from 'vue-axios'
-import axios from 'axios'
-
-Vue.use(VueAxios, axios)
+import firebase from 'firebase/app'
+import './components/firebaseInit'
 
 Vue.use(Vuex)
 
@@ -18,13 +15,14 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue);
 
-Vue.prototype.$id = '1';
-
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+let app
+firebase.auth().onAuthStateChanged(user => {
+  if(!app) {
+    app = new Vue({
+      el: '#app',
+      router,
+      components: { App },
+      template: '<App/>'
+    })
+  }
 })

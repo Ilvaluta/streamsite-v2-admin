@@ -1,16 +1,19 @@
 <template>
 <div id="nav">
-  <b-navbar toggleable="md" type="dark" variant="info">
+  <b-navbar toggleable="md" type="dark" class="blue-bg">
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <router-link to="/dashboard" tag="b-navbar-brand">StreamSite</router-link>
+    <b-navbar-brand>StreamSite</b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
-      <b-navbar-nav>
-        <b-nav-item to="/dashboard/settings">Settings</b-nav-item>
-        <b-nav-item to="/dashboard/sponsors">Sponsors</b-nav-item>
-        <b-nav-item to="/dashboard/giveaway">Giveaway</b-nav-item>
+      <b-navbar-nav v-if="isLoggedIn">
+        <b-nav-item to="/dashboard">Dashboard</b-nav-item>
+        <b-nav-item to="/settings">Settings</b-nav-item>
+        <b-nav-item to="/social">Social</b-nav-item>
+        <b-nav-item to="/colors">Colors</b-nav-item>
+        <b-nav-item to="/sponsors">Sponsors</b-nav-item>
+        <b-nav-item to="/giveaway">Giveaway</b-nav-item>
     </b-navbar-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
@@ -19,8 +22,9 @@
           <template slot="button-content">
           <em>{{ user }}</em>
         </template>
-          <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Signout</b-dropdown-item>
+          <b-dropdown-item to="/user" v-if="isLoggedIn">User</b-dropdown-item>
+          <b-dropdown-item to="/login" v-else >Login</b-dropdown-item>
+          <b-dropdown-item v-if="isLoggedIn"><b-button variant="danger" v-on:click="logout" size="sm">Logout</b-button></b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
 
@@ -30,23 +34,31 @@
 </template>
 
 <script>
+import db from './firebaseInit'
+import firebase from 'firebase/app'
+
 export default {
   name: 'Navigation',
   data: function() {
     return {
-      user: ''
+      user: '',
+      isLoggedIn: false
     }
   },
   methods: {
-    fetchUsername() {
-      this.$http.get('http://streamsiteb/api/streamer/' + this.$id)
-        .then(function(response) {
-          this.user = response.body.twitch;
-        });
+    logout(){
+      firebase.auth().signOut().then(() => {
+        this.$router.go({
+          path: this.$router.path
+        })
+      })
     }
   },
   created: function() {
-    this.fetchUsername();
+    if(firebase.auth().currentUser){
+      this.isLoggedIn = true
+      this.user = firebase.auth().currentUser.email
+    }
   }
 }
 </script>
