@@ -1,9 +1,10 @@
 <template>
 <div class="settings">
+  <vue-headful :title="title"/>
   <b-container>
     <div class="streamer-settings mt-2">
       <b-form @submit.prevent="editStreamer">
-        <h1>Settings</h1>
+        <h1 class="title">Settings</h1>
         <hr>
         <div class="warning">
           <p>To show Youtube vids you need to input your YT channel ID and NOT your username.</p>
@@ -104,6 +105,7 @@
 
 <script>
 import db from '../firebaseInit'
+import firebase from 'firebase/app'
 
 export default {
   name: 'Settings',
@@ -111,6 +113,7 @@ export default {
   data() {
     return {
       streamer: {},
+      title: 'Settings - StreamSite Admin',
       successSecs: 5,
       successCd: 0,
       errorSecs: 5,
@@ -153,16 +156,16 @@ export default {
   },
   methods: {
     fetchData() {
-      db.collection('streamers').where('streamer_id', '==', this.uid).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
+      db.collection('streamers').doc(this.uid).get().then((doc) => {
+        if (doc.exists) {
           this.streamer = doc.data()
-        })
+        } else {
+          alert('An error has occurred')
+        }
       })
     },
     editStreamer(){
-      db.collection('streamers').where('streamer_id', '==', this.uid).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          doc.ref.update({
+      db.collection('streamers').doc(this.uid).update({
             streamer_id: this.streamer.streamer_id,
             header: this.streamer.header,
             twitch: this.streamer.twitch,
@@ -173,10 +176,15 @@ export default {
             donation: this.streamer.donation,
             showYt: this.streamer.showYt,
             youtube: this.streamer.youtube
-          })
+      }).then(() => {
+        this.$router.go({
+          path: this.$router.path
         })
+      }).catch((error) => {
+        console.log(error)
       })
     },
+
     showSuccess(){
       this.successCd = this.successSecs
     },

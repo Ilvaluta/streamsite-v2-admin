@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard">
+    <vue-headful :title="title"/>
     <b-container>
-      <h1 class="mt-2">Dashboard</h1>
+      <h1 class="mt-2 title">Dashboard</h1>
       <p class="warning">Please keep in mind StreamSite is still in it's "alpha" phase, so alot more features will be added in the future.</p>
       <hr>
       <div class="initialize" v-if="noDoc">
@@ -76,22 +77,22 @@
         </b-form>
       </div>
       <!-- End of if no doc -->
-      <div class="something">
+      <div class="something" v-else>
         <b-row>
-          <b-col cols="8">
+          <b-col cols="12" lg="8">
             <b-card class="list-bg">
               <b-card bg-variant="dark">
-              <h5>Placeholder (Kind of)</h5>
+              <h5 class="title">Placeholder (Kind of)</h5>
               <hr>
               <p>I plan to add analytics here for you to see how many people have interacted with the different parts of the site.<br>For example, how many people click to view what time of highlights/vods, how many people click the sponsor links.<br>This will be added in a future update.</p>
               </b-card>
             <hr>
               <b-card bg-variant="dark">
-                <h5>Feedback</h5>
+                <h5 class="title">Feedback</h5>
                 <hr>
                 <p>Any feedback you have is appreciated, whether it's something you like, don't like or want added, it all helps and I am thankful for all of it.</p>
                 <p>For the moment if you wouldn't mind emailing <a href="mailto:feedback@esjem.net">feedback@esjem.net</a></p>
-                <p>I'll add more ways to submit feedback soon™</p>
+                <p>More ways to submit feedback will be added soon™</p>
               </b-card>
             </b-card>
           </b-col>
@@ -127,9 +128,10 @@ export default {
   props: ['uid'],
   data () {
     return {
-      noDoc: true,
+      updateDate: '',
+      noDoc: null,
+      title: 'Dashboard - StreamSite Admin',
       recentUpdates: [],
-      updateDate: '24/09/18',
       streamer: {},
       options: [{
           value: '1',
@@ -171,19 +173,17 @@ export default {
       let user = firebase.auth().currentUser
       if(user) {
         let uid = user.uid
-        db.collection('streamers').where('streamer_id', '==', this.uid).get().then(querySnapshot => {
-          querySnapshot.forEach((doc) => {
-            if(doc.data().streamer_id != null || doc.data().streamer_id != '') {
-              this.noDoc = false
-            } else {
-              this.noDoc = true
-            }
-          })
+        db.collection('streamers').doc(uid).get().then((doc) => {
+          if (doc.exists) {
+            this.noDoc = false
+          } else {
+            this.noDoc = true
+          }
         })
         }
       },
       initStreamer() {
-        db.collection('streamers').add({
+        db.collection('streamers').doc(this.uid).set({
           streamer_id: firebase.auth().currentUser.uid,
           header: this.streamer.header,
           twitch: this.streamer.twitch,
@@ -192,10 +192,12 @@ export default {
           highlights: this.streamer.highlights,
           sponsors: this.streamer.sponsors,
           donation: this.streamer.donation,
+          showYt: '',
+          youtube: '',
           twitter: '',
           instagram: ''
         }).then(() => {
-          this.$router.push('/settings')
+          this.$router.go()
         })
       },
       fetchUpdates() {

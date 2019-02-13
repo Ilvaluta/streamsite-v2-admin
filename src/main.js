@@ -7,11 +7,14 @@ import BootstrapVue from 'bootstrap-vue'
 import Vuex from 'vuex'
 import firebase from 'firebase/app'
 import './components/firebaseInit'
+import vueHeadful from 'vue-headful';
 
+Vue.component('vue-headful', vueHeadful);
 Vue.use(Vuex)
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import '@/assets/css/main.css'
 
 Vue.use(BootstrapVue);
 

@@ -1,8 +1,10 @@
 <template>
 <div class="sponsors">
+  <vue-headful :title="title"/>
   <b-container>
     <div class="sponsor-list mt-2">
-      <h1>Sponsors</h1>
+      <h1 class="title">Sponsors</h1>
+      <p class="warning">I'm aware this page isn't responsive and may appear broken on mobile.  It is being worked on.</p>
       <b-table striped hover :items="sponsors" :fields="fields" class="sponsorTable">
         <template slot="edit" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
@@ -70,7 +72,7 @@
       <b-row>
         <b-col cols="8">
       <div class="sponsor-preview mt-4">
-        <h3>Previews</h3>
+        <h3 class="title">Previews</h3>
         <hr>
         <ul>
           <li v-for="s in sponsors"><b-card :header="s.name" text-variant="white" bg-variant="dark"><a :href="s.url"><img :src="s.img"></a><p class="card-text">{{s.txt}}</p></b-card></li>
@@ -81,7 +83,7 @@
       <!-- Add -->
       <b-col cols="4">
       <div class="sponsor-add mt-4">
-        <h3>Add a sponsor</h3>
+        <h3 class="title">Add a sponsor</h3>
         <hr>
         <div class="forms">
           <b-card text-variant="white" bg-variant="dark">
@@ -115,6 +117,7 @@ export default {
     return {
       sponsors: [],
       sponsor: {},
+      title: 'Sponsors - StreamSite Admin',
       editSpon: {},
       fields: {
         name: {
@@ -175,6 +178,10 @@ export default {
       if (confirm('Are you sure ?')) {
         db.collection('sponsors').doc(id).onSnapshot(doc => {
           doc.ref.delete()
+        }).then(() => {
+          this.$router.go({
+            path: this.$router.path
+          })
         })
       }
     },
@@ -190,7 +197,9 @@ export default {
           this.sponsor.url = '',
           this.sponsor.img = '',
           this.sponsor.txt = '',
-          this.$refs.sponsorTable.refresh()
+          this.$router.go({
+            path: this.$router.path
+          })
       })
     },
   },

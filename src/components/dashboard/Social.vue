@@ -1,9 +1,10 @@
 <template>
 <div class="social">
+  <vue-headful :title="title" />
   <b-container>
     <div class="social-settings mt-2">
       <b-form @submit.prevent="editSocial">
-        <h1>Settings</h1>
+        <h1 class="title">Settings</h1>
         <hr>
         <b-card-group deck>
           <b-card header="<b>Social Settings</b>" text-variant="white" bg-variant="dark">
@@ -16,7 +17,7 @@
                   <b-col sm="2">
                     <label for="input-header"><b>Instagram :</b></label></b-col>
                   <b-col sm="6">
-                    <b-form-input id="input-header" size="sm" type="text" placeholder="Header" v-model="instagram"></b-form-input>
+                    <b-form-input id="input-header" size="sm" type="text" placeholder="Instagram" v-model="instagram"></b-form-input>
                   </b-col>
                 </b-row>
               </b-list-group-item>
@@ -25,7 +26,7 @@
                   <b-col sm="2">
                     <label for="input-donation"><b>Twitter :</b></label></b-col>
                   <b-col sm="6">
-                    <b-form-input id="input-donation" size="sm" type="text" placeholder="Donation URL" v-model="twitter"></b-form-input>
+                    <b-form-input id="input-donation" size="sm" type="text" placeholder="Twitter" v-model="twitter"></b-form-input>
                   </b-col>
                 </b-row>
               </b-list-group-item>
@@ -50,35 +51,36 @@ export default {
   data() {
     return {
       instagram: '',
+      title: 'Social - StreamSite Admin',
       twitter: ''
     }
   },
   methods: {
     fetchSocial() {
-      db.collection('streamers').where('streamer_id', '==', this.uid).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
+      db.collection('streamers').doc(this.uid).get().then((doc) => {
+        if (doc.exists) {
           this.instagram = doc.data().instagram
           this.twitter = doc.data().twitter
-        })
+        } else {
+          alert('An error has occurred')
+        }
       })
     },
-    editSocial(){
-      db.collection('streamers').where('streamer_id', '==', this.uid).get().then(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          doc.ref.update({
-            instagram: this.instagram,
-            twitter: this.twitter,
-          }).then(() => {
-            this.$router.push('/social')
-          })
-        })
-      })
-    },
+    editSocial() {
+      db.collection('streamers').doc(this.uid).update({
+        instagram: this.instagram,
+        twitter: this.twitter,
+}).then(() => {
+  this.$router.go({
+    path: this.$router.path
+  })
+})
+},
 
-  },
-  created: function(){
-    this.fetchSocial()
-  }
+},
+created: function() {
+  this.fetchSocial()
+}
 }
 </script>
 

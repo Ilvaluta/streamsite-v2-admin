@@ -1,7 +1,8 @@
 <template>
   <div class="login">
+    <vue-headful :title="title"/>
     <b-container>
-      <h2>Please log in to access this page</h2>
+      <h2 class="title">Please log in to access this page</h2>
       <hr>
       <b-row class="mt-5">
         <b-col cols="4" offset="4">
@@ -40,6 +41,7 @@ export default {
   name: 'Login',
   data () {
     return {
+      title: 'Login - StreamSite Admin',
       email: '',
       password: '',
       error: '',

@@ -1,12 +1,13 @@
 <template>
 <div class="settings">
+  <vue-headful :title="title"/>
   <b-container>
     <div class="streamer-settings mt-2">
       <b-form @submit.prevent="updateUsr">
-        <h1>Account Settings</h1>
+        <h1 class="title">Account Settings</h1>
         <hr>
         <b-card-group deck>
-          <b-card header="<b>Main Settings ( More will be come when features are added )</b>" text-variant="white" bg-variant="dark">
+          <b-card header="<b>Main Settings ( More will become available when features are added )</b>" text-variant="white" bg-variant="dark">
             <b-list-group>
               <b-list-group-item class="list-bg">
                 <b-row class="my-1">
@@ -20,7 +21,7 @@
               <b-list-group-item class="list-bg">
                 <b-row class="my-1">
                   <b-col sm="2">
-                    <label for="input-current-password"><b>Password:</b></label></b-col>
+                    <label for="input-current-password"><b>Current Password:</b></label></b-col>
                   <b-col sm="6">
                     <b-form-input required id="input-current-password" size="sm" type="password" placeholder="Current Password" v-model="updUsr.currentPassword"></b-form-input>
                   </b-col>
@@ -69,6 +70,7 @@ export default {
       error: '',
       noMatch: false,
       passwordCheck: '',
+      title: 'User - StreamSite Admin',
       updUsr: {
         email : '',
         newPassword: '',

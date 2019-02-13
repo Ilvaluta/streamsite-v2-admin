@@ -1,13 +1,13 @@
 <template>
 <div id="nav">
-  <b-navbar toggleable="md" type="dark" class="blue-bg">
+  <b-navbar toggleable="md" class="nav-bg">
 
     <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
 
-    <b-navbar-brand>StreamSite</b-navbar-brand>
+    <b-navbar-brand><img src="../assets/logo.png"/></b-navbar-brand>
 
     <b-collapse is-nav id="nav_collapse">
-      <b-navbar-nav v-if="isLoggedIn">
+      <b-navbar-nav v-if="isLoggedIn" class="nav-text">
         <b-nav-item to="/dashboard">Dashboard</b-nav-item>
         <b-nav-item to="/settings">Settings</b-nav-item>
         <b-nav-item to="/social">Social</b-nav-item>
@@ -67,4 +67,13 @@ export default {
 .forms {
   margin: 16px 0 16px 0;
 }
+
+.navbar-light .navbar-nav .nav-link {
+  color: rgb(37, 40, 48);
+}
+
+.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+  font-weight: bolder;
+}
+
 </style>

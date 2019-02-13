@@ -21,17 +21,18 @@ let router = new Router({
       name: 'Login',
       component: Login,
       meta: {
+        title: 'Home',
         requiresGuest: true
       }
     },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register,
-      meta: {
-        requiresGuest: true
-      }
-    },
+    // {
+    //   path: '/register',
+    //   name: 'Register',
+    //   component: Register,
+    //   meta: {
+    //     requiresGuest: true
+    //   }
+    // },
     {
       path: '/',
       redirect: '/dashboard',

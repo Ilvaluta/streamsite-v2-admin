@@ -36,39 +36,5 @@ export default {
 </script>
 
 <style>
-hr {
-  background-color: rgb(128, 128, 128);
-}
-
-body {
-  background: rgb(37, 40, 48);
-  color: #EAEAEA;
-}
-
-.card-test {
-  background: rgb(67, 72, 87);
-}
-
-.list-bg {
-  background: #333;
-}
-
-.btn-blue {
-  background: rgb(25, 151, 198);
-  color: #EAEAEA;
-}
-
-.blue-bg {
-  background: rgb(25, 151, 198);
-}
-
-.twitch-purple{
-  background: #6441A4;
-}
-
-.warning {
-  font-weight: bold;
-  color: rgb(208, 77, 77);
-}
 
 </style>
