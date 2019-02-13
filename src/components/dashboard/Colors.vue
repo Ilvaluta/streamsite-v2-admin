@@ -77,7 +77,7 @@
                 <b-col sm="6">
                   <label for="input-social-text"><b>Section Background :</b></label></b-col>
                 <b-col sm="6">
-                  <b-form-input id="input-section-bg" size="sm" type="text" v-model="sectionBg"></b-form-input>
+                  <b-form-input id="input-section-bg" size="sm" type="text" v-model="sectionBg" v-bind:style="{background: sectionBg}"></b-form-input>
                 </b-col>
               </b-row>
             </b-list-group-item>
@@ -295,6 +295,11 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.bg-preview {
+  max-height: 180px;
+  max-width: 180px;
+}
+
 input {
   color: black;
   text-shadow: 1px 1px 2px white;
