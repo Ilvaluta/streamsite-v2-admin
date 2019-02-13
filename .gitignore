@@ -1,6 +1,5 @@
 .DS_Store
 node_modules/
-/dist/
 /src/components/firebaseConfig.js
 /src/components/firebaseInit.js
 npm-debug.log*
