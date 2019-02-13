@@ -72,6 +72,15 @@
                 </b-col>
               </b-row>
             </b-list-group-item>
+            <b-list-group-item class="list-bg">
+              <b-row class="my-1">
+                <b-col sm="6">
+                  <label for="input-social-text"><b>Section Background :</b></label></b-col>
+                <b-col sm="6">
+                  <b-form-input id="input-section-bg" size="sm" type="text" v-model="sectionBg"></b-form-input>
+                </b-col>
+              </b-row>
+            </b-list-group-item>
             </b-list-group>
           </b-card>
           <!-- ### -->
