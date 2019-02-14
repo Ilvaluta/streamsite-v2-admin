@@ -2,6 +2,7 @@
 node_modules/
 /src/components/firebaseConfig.js
 /src/components/firebaseInit.js
+/dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
